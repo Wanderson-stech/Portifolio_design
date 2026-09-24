@@ -18,7 +18,8 @@ document.querySelectorAll('img[data-b64]').forEach(async (img) => {
     const res = await fetch(img.dataset.b64);
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const b64 = (await res.text()).trim();
-    img.src = `data:image/jpeg;base64,${b64}`;
+    const mime = img.dataset.mime || 'image/webp';
+    img.src = `data:${mime};base64,${b64}`;
   } catch (err) {
     console.error('Falha ao carregar imagem', img.dataset.b64, err);
   }
